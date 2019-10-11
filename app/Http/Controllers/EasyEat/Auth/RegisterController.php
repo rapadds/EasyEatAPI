@@ -78,4 +78,38 @@ class RegisterController extends Controller
         ];
         return response()->json($response,200);
     }
+
+    public function otpCheck(Request $request){
+        $validator = Validator::make($request->all(),array(
+            'otpnumber' => 'required|numeric',
+        ));
+
+        if($validator->fails()){
+            response()->json(array(
+                "success" => false,
+                "data"=> "Validation Error",
+                "message" => $validator->errors()
+            ),400);
+        }
+
+        $inputParams = $request->all();
+        $tmpDefaultOTPVALUE = "1234";
+        if($inputParams['otpnumber']=== $tmpDefaultOTPVALUE){
+            $response = array(
+                'success' => true,
+                'data' => "",
+                'message' => 'OTP verified successfully.'
+            );
+
+            return response()->json($response,200);
+        }else{
+            $response = array(
+                'success' => true,
+                'data' => "",
+                'message' => 'Wrong OTP please try again.'
+            );
+
+            return response()->json($response,200);
+        }
+    }
 }

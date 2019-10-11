@@ -20,6 +20,9 @@ Route::post("register/otpcheck","EasyEat\Auth\RegisterController@otpCheck");
 Route::post("login/client","EasyEat\Auth\LoginController@loginClient");
 Route::post("login/serviceprovider","EasyEat\Auth\LoginController@loginServiceProvider");
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+Route::middleware('auth:api')->group( function () {
+    Route::resource('client', 'EasyEat\ClientController');
 });

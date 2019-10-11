@@ -13,7 +13,7 @@ class RegisterController extends Controller
     public function registerClient(Request $request){
 
         $validator = Validator::make($request->all(),array(
-            'phoneNumber' => 'required|numeric|unique:users,phoneNumber,loginType',
+            'phoneNumber' => 'required|numeric|uniqueUserType:users,phoneNumber,0',
             'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
             'c_password' => 'required|same:password'
         ));
@@ -47,10 +47,11 @@ class RegisterController extends Controller
     public function registerServiceProvider(Request $request){
 
         $validator = Validator::make($request->all(),array(
-            'phoneNumber' => 'required|numeric|unique:users,phoneNumber,loginType',
+            'phoneNumber' => 'required|numeric|uniqueUserType:users,phoneNumber,1',
             'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
             'c_password' => 'required|same:password'
         ));
+
         if($validator->fails()){
             $response = array(
                 "success" => false,

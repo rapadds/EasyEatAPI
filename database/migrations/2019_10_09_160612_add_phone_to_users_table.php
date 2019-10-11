@@ -17,6 +17,7 @@ class AddPhoneToUsersTable extends Migration
             //
             $table->char('phoneNumber', 50);
             $table->integer('loginType');
+            $table->dropUnique('users_email_unique');
         });
     }
 

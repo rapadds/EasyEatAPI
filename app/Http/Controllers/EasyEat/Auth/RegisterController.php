@@ -81,11 +81,13 @@ class RegisterController extends Controller
 
     public function otpCheck(Request $request){
         $validator = Validator::make($request->all(),array(
-            'otpnumber' => 'required|numeric',
+            'otpnumber' => 'numeric',
         ));
 
+//        var_dump($request->all());exit;
+
         if($validator->fails()){
-            response()->json(array(
+            return response()->json(array(
                 "success" => false,
                 "data"=> "Validation Error",
                 "message" => $validator->errors()

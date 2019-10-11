@@ -16,14 +16,16 @@ class RegisterClientTest extends TestCase
     public function testUserCreation()
     {
         $response = $this->json("POST","/api/register/client",array(
-            "phoneNumber" => "37612070",
+            "phoneNumber" => "38792197",
             "password"=>"Fasil123!",
             "c_password"=>"Fasil123!"
         ));
 
         $response->assertStatus(200)
         ->assertJson(array(
-            "phoneNumber" => "37612070"
+            "data" => array(
+                "phoneNumber" => "37612070"
+            )
         ));
     }
 

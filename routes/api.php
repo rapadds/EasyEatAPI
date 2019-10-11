@@ -25,4 +25,5 @@ Route::post("login/serviceprovider","EasyEat\Auth\LoginController@loginServicePr
 });*/
 Route::middleware('auth:api')->group( function () {
     Route::resource('client', 'EasyEat\ClientController');
+    Route::resource('serviceprovider', 'EasyEat\ServiceProviderController');
 });

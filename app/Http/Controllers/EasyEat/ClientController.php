@@ -121,7 +121,6 @@ class ClientController extends Controller
             "telephone"=> "json",
             "lieuDeResidence"=> "alpha_num",
             "socialAccountInJson"=> "json",
-            "authClientId"=> "numeric|unique:clients,authClientId",
         ));
 
         if($validators->fails()){
@@ -134,25 +133,36 @@ class ClientController extends Controller
             return response()->json($response,400);
         }
         $input = $request->all();
-        $newInfoClient = Client::find($id);
+        try{
+            $newInfoClient = Client::findOrFail($id);
 
-        $newInfoClient->nom = $input['nom'];
-        $newInfoClient->prenom = $input['prenom'];
-        $newInfoClient->sexe = $input['sexe'];
-        $newInfoClient->dateNaissance = $input['dateNaissance'];
-        $newInfoClient->telephone = $input['telephone'];
-        $newInfoClient->lieuDeResidence = $input['lieuDeResidence'];
-        $newInfoClient->socialAccountInJson = $input['socialAccountInJson'];
-        $newInfoClient->authClientId = $input['authClientId'];
-        $newInfoClient->save();
+            $newInfoClient->nom = $input['nom'];
+            $newInfoClient->prenom = $input['prenom'];
+            $newInfoClient->sexe = $input['sexe'];
+            $newInfoClient->dateNaissance = $input['dateNaissance'];
+            $newInfoClient->telephone = $input['telephone'];
+            $newInfoClient->lieuDeResidence = $input['lieuDeResidence'];
+            $newInfoClient->socialAccountInJson = $input['socialAccountInJson'];
+            $newInfoClient->authClientId = $input['authClientId'];
+            $newInfoClient->save();
 
 
-        $response = array(
-            'success' => true,
-            'data' => $newInfoClient,
-            'message' => 'User\'info saved successfully.'
-        );
-        return response()->json($response,200);
+            $response = array(
+                'success' => true,
+                'data' => $newInfoClient,
+                'message' => 'User\'info saved successfully.'
+            );
+            return response()->json($response,200);
+        }catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            $response = array(
+                "success" => false,
+                "data"=> "",
+                "message" => "Requested data not found"
+            );
+
+            return response()->json($response,404);
+        }
+
     }
 
     /**

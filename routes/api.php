@@ -17,6 +17,9 @@ Route::post("register/client","EasyEat\Auth\RegisterController@registerClient");
 Route::post("register/serviceprovider","EasyEat\Auth\RegisterController@registerServiceProvider");
 Route::post("register/otpcheck","EasyEat\Auth\RegisterController@otpCheck");
 
+Route::post("login/client","EasyEat\Auth\LoginController@loginClient");
+Route::post("login/serviceprovider","EasyEat\Auth\LoginController@loginServiceProvider");
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
